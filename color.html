@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div#zone {
+      width: 500px;
+      height: 300px;
+      border: pink 1px solid;
+      margin-bottom: 10px;
+      text-align: center;
+      font-size: 40px;
+      line-height: 300px;
+      text-transform: uppercase;
+      color: white;
+    }
+
+    ;
+  </style>
+
+</head>
+
+<body>
+  <div id="zone" style="background-color: rgb(78,202,157 );">#4eca9d</div>
+  <div>
+    <input type="button" value="R" onclick="ask('r')">
+    <input type="button" value="G" onclick="ask('g')">
+    <input type="button" value="B" onclick="ask('b')">
+  </div>
+
+  <script>
+
+    let rgb = { r: 0, g: 0, b: 0 };
+
+    function ask(clr) {
+      do {
+        let newclr = prompt("請輸入0~255", rgb[clr]);
+        rgb[clr] = newclr;
+      } while (!(0 <= newclr && newclr <= 255));
+
+    };
+
+
+  </script>
+
+</body>
+
+</html>
