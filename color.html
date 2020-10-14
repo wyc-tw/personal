@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>RGB</title>
   <style>
     div#zone {
       width: 500px;
@@ -34,6 +34,9 @@
   <script>
 
     let rgb = { r: 0, g: 0, b: 0 };
+    rgb.r = Math.floor(Math.random() * 256);
+    rgb.g = Math.floor(Math.random() * 256);
+    rgb.b = Math.floor(Math.random() * 256);
     printRGB();
 
     function ask(clr) {
@@ -46,8 +49,6 @@
       printRGB();
     };
 
-
-    
     function printRGB() {
       document.getElementById("zone").style.backgroundColor = `rgb(${rgb.r},${rgb.g},${rgb.b})`
       document.getElementById("zone").style.color = `rgb(${255 - rgb.r},${255 - rgb.g},${255 - rgb.b})`
