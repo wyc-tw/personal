@@ -24,7 +24,7 @@
 </head>
 
 <body>
-  <div id="zone" style="background-color: rgb(78,202,157 );">#4eca9d</div>
+  <div id="zone" style="background-color: rgb(78,202,157 );"></div>
   <div>
     <input type="button" value="R" onclick="ask('r')">
     <input type="button" value="G" onclick="ask('g')">
@@ -34,15 +34,30 @@
   <script>
 
     let rgb = { r: 0, g: 0, b: 0 };
+    printRGB();
 
     function ask(clr) {
+      let newclr
       do {
-        let newclr = prompt("請輸入0~255", rgb[clr]);
+        newclr = prompt("請輸入0~255", rgb[clr]);
         rgb[clr] = newclr;
       } while (!(0 <= newclr && newclr <= 255));
-
+      rgb[clr] = (newclr == null) ? rgb[clr] : Number(newclr);
+      printRGB();
     };
 
+
+    
+    function printRGB() {
+      document.getElementById("zone").style.backgroundColor = `rgb(${rgb.r},${rgb.g},${rgb.b})`
+      document.getElementById("zone").style.color = `rgb(${255 - rgb.r},${255 - rgb.g},${255 - rgb.b})`
+      document.getElementById("zone").textContent = `#${zerochk(rgb.r)}${zerochk(rgb.g)}${zerochk(rgb.b)}`
+    };
+
+    function zerochk(str) {
+      str = str.toString(16);
+      return str.length == 2 ? str : "0" + str;
+    };
 
   </script>
 
