@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analog Lock</title>
+  <style>
+    body {
+      background-color: gray;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      height: 100vh;
+      font-weight: bolder;
+    }
+
+    .circle {
+      width: 300px;
+      height: 300px;
+      background-color: white;
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .zmin1,
+    .zhur1,
+    .zsec1 {
+      width: 300px;
+      height: 300px;
+      position: absolute;
+    }
+
+    .jmin1 {
+      width: 10px;
+      height: 40%;
+      background: greenyellow;
+      position: absolute;
+      left: 50%;
+      top: 15%;
+      margin-left: -5px;
+    }
+
+    .jhur1 {
+      width: 10px;
+      height: 30%;
+      background: blue;
+      position: absolute;
+      left: 50%;
+      top: 25%;
+      margin-left: -5px;
+    }
+
+    .jsec1 {
+      width: 4px;
+      height: 40%;
+      background: red;
+      position: absolute;
+      left: 50%;
+      top: 15%;
+      margin-left: -5px;
+    }
+
+    .zmin1 {
+      animation: jmr 3600s linear infinite;
+    }
+
+    .zhur1 {
+      animation: jhr 43200s linear infinite;
+    }
+
+    .zsec1 {
+      animation: jsr 1s linear infinite;
+    }
+
+
+    .jmin2,
+    .jhur2,
+    .jsec2 {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      margin-left: -14px;
+    }
+
+    .zmin2 {
+      animation: jmr 3600s linear infinite;
+    }
+
+    .zhur2 {
+      animation: jhr 43200s linear infinite;
+    }
+
+    .zsec2 {
+      animation: jsr 60s linear infinite;
+    }
+  </style>
+
+  <script>
+    let time = new Date();
+    let hdeg = (time.getHours() * 3600 + time.getMinutes() * 60 + time.getSeconds()) / 43200 * 360
+    let mdeg = (time.getMinutes() * 60 + time.getSeconds()) / 3600 * 360
+    let sdeg = time.getSeconds() / 60 * 360
+
+    document.write(`
+    <style>
+    @keyframes jhr {
+      from {transform: rotate(${hdeg} deg);}
+      to {transform: rotate(${hdeg + 360} deg);}
+    }
+    @keyframes jmr {
+      from {transform: rotate(${mdeg} deg);}
+      to {transform: rotate(${mdeg + 360}deg);}
+    }
+    @keyframes jsr {
+      from {transform: rotate(${sdeg} deg);}
+      to {transform: rotate(${sdeg + 360} deg);}
+    }
+    </style>
+    `);
+
+    function ctl(who) {
+      if (who.textContent == "STOP") {
+        clearInterval(loop);
+        who.textContent = "PLAY";
+      }
+      else {
+        who.textContent = "STOP";
+        loop = setInterval(runtime, 1000);
+      }
+    }
+
+    
+  </script>
+
+
+
+</head>
+
+
+
+
+<body>
+  <div class="circle">
+    <div class="zmin1">
+      <div class="jmin1"></div>
+    </div>
+    <div class="zhur1">
+      <div class="jhur1"></div>
+    </div>
+    <div class="zsec1">
+      <div class="jsec1"></div>
+    </div>
+    <h3>Clock</h3>
+  </div>
+
+  <div class="circle">
+    <img src="./pic/mm.png" class="jmin2">
+    <img src="./pic/hh.png" class="jhur2">
+    <img src="./pic/ss.png" class="jsec2">
+    <h3>透背圖層</h3>
+  </div>
+
+  <div class="circle">
+    <div class="jmin1 rmin3"></div>
+    <div class="jhur1 rhur3"></div>
+    <div class="jsec1 rsec3"></div>
+    <h3>透背圖層</h3>
+  </div>
+</body>
+
+</html>
