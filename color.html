@@ -6,29 +6,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RGB</title>
   <style>
+    body {
+      background: #333;
+      margin: 0;
+      padding-top: 10px;
+    }
+
     div#zone {
-      width: 500px;
+      width: 600px;
       height: 300px;
       border: pink 1px solid;
-      margin-bottom: 10px;
       text-align: center;
       font-size: 40px;
       line-height: 300px;
       text-transform: uppercase;
       color: white;
+      margin: 0px auto;
     }
 
-    ;
+    div#input {
+      width: 200px;
+      height: 100px;
+      margin: 0px auto;
+    }
+
+    .button {
+      width: 60px;
+      height: 40px;
+      font-size: 20px;
+      font-weight: bolder;
+    }
   </style>
 
 </head>
 
 <body>
-  <div id="zone" style="background-color: rgb(78,202,157 );"></div>
-  <div>
-    <input type="button" value="R" onclick="ask('r')">
-    <input type="button" value="G" onclick="ask('g')">
-    <input type="button" value="B" onclick="ask('b')">
+  <div id="zone"></div>
+  <hr>
+  <div id="input">
+    <input class="button" type="button" value="R" onclick="ask('r')">
+    <input class="button" type="button" value="G" onclick="ask('g')">
+    <input class="button" type="button" value="B" onclick="ask('b')">
   </div>
 
   <script>
