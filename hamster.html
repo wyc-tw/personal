@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>打地鼠</title>
+
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box !important;
+    }
+
+    .ninebk {
+      display: flex;
+      flex-flow: row wrap;
+      width: 330px;
+      height: 330px;
+    }
+
+    .ninebk>img {
+      flex: 0 0 100;
+      border: 5px solid gray;
+      background: rgb(130, 210, 210);
+    }
+
+    .container {
+      width: 330px;
+      text-align: center;
+    }
+
+    .bar {
+      margin: 15px auto;
+      display: flex;
+      justify-content:space-evenly;
+      flex:0 0 50%;
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      font-size: large;
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+  <div class="container">
+    <div class="ninebk">
+      <img src="./pic/shark/find.png" class="cell" onclick="getCount(0)">
+      <img src="./pic/shark/find.png" class="cell" onclick="getCount(1)">
+      <img src="./pic/shark/find.png" class="cell" onclick="getCount(2)">
+      <img src="./pic/shark/find.png" class="cell" onclick="getCount(3)">
+      <img src="./pic/shark/find.png" class="cell" onclick="getCount(4)">
+      <img src="./pic/shark/find.png" class="cell" onclick="getCount(5)">
+      <img src="./pic/shark/find.png" class="cell" onclick="getCount(6)">
+      <img src="./pic/shark/find.png" class="cell" onclick="getCount(7)">
+      <img src="./pic/shark/find.png" class="cell" onclick="getCount(8)">
+    </div>
+
+    <div class="control">
+      <div class="bar"> 
+        <span>Score：<span id=combo>0</span></span>
+        <span>Time：<span id=time>0</span> 秒</span>
+
+      </div>
+      <button>START!</button>
+      <hr>
+      <b>遊戲說明</b>
+      <p>打地鼠遊戲，遊戲開始時使用滑鼠(或數字鍵)點擊紅色區塊進行得分。</p>
+    </div>
+  </div>
+
+  <script>
+    //初始化，規劃節點DOM
+    let btn = document.getElementsByTagName("button")[0];
+    let time = document.getElementById("time");
+    let combo = document.getElementById("combo");
+    let animal = document.getElementsByClassName("cell");
+    let sec = 0, count = 0, flag = 0;
+    let beBlue = new Array();
+
+    //全域變數區
+    btn.addEventListener("click", gamestart);
+
+    function gamestart() {
+      sec = 60, count = 0, flag = 1;
+      time.textContent = sec;
+      //combo.textContent = count;
+      btn.removeEventListener("click", gamestart);
+
+      let start = setInterval(() => {
+        if (sec == 0) {
+          flag = 0;
+          clearInterval(start);
+          btn.addEventListener("click", gamestart);
+        }
+        else {
+          sec--;
+          time.textContent = sec;
+        }
+      }, 1000);
+
+      for (let i = 0; i < 50; i++) {
+        let ontime = Math.floor(Math.random() * 60000);//0~59999ms
+        let space = Math.floor(Math.random() * 9);//0~8位置
+        let stick = Math.floor(Math.random() * 3) + 2;//停留2~4秒
+
+        setTimeout(() => { showit(space, stick, i); }, ontime);
+      }
+    }
+
+    function showit(sSpace, sStick, sI) {//blue to red
+      if (animal[sSpace].attributes.src.value == "./pic/shark/find.png") {
+        animal[sSpace].style.background = "red";
+        animal[sSpace].src = "./pic/shark/hi.png";
+        animal[sSpace].alt = sI;
+
+
+        beBlue[sI] = setTimeout(() => {
+          animal[sSpace].style.background = null;
+          animal[sSpace].src = "./pic/shark/find.png";
+          animal[sSpace].removeAttribute('alt');
+        }, sStick * 1000);
+      }
+      else {
+        //let nextSpace=(sSpace==8)?0:sSpace+1;
+        //let nextSpace = (sSpace + 1) % 9
+        let nextSpace = Math.floor(Math.random() * 9);//0~8位置
+
+        setTimeout(() => { showit(nextSpace, sStick, sI); }, 100);
+      }
+    }
+
+    document.onkeydown = keyToDo;
+    function keyToDo() {
+      if (flag) switch (event.keyCode) {
+        case 103: getCount(0); break;
+        case 104: getCount(1); break;
+        case 105: getCount(2); break;
+        case 100: getCount(3); break;
+        case 101: getCount(4); break;
+        case 102: getCount(5); break;
+        case 97: getCount(6); break;
+        case 98: getCount(7); break;
+        case 99: getCount(8); break;
+      }
+    }
+
+
+
+    function getCount(space) {//red to green
+      //換色+換圖
+      if (animal[space].attributes.src.value == "./pic/shark/hi.png" && flag) {
+        animal[space].style.background = "green";
+        animal[space].src = "./pic/shark/eat.png";
+        //得分
+        count++;
+        combo.textContent = count*2;
+
+        let animalId = animal[space].alt;
+        clearTimeout(beBlue[animalId]);
+        animal[space].removeAttribute('alt');
+
+        setTimeout(() => {//to blue
+          animal[space].style.background = null;
+          animal[space].src = "./pic/shark/find.png";
+        }, 1000);
+      }
+    }
+
+  </script>
+
+</body>
+
+</html>
